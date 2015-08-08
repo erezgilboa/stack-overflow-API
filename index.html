@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+    <script src="JSGeneralElectric.js"></script>
+    <title>
+
+        
+    </title>
+    <style>
+        
+    
+
+    </style>
+
+</head>
+<body>
+<style>
+
+    .d3-visualize rect {
+        fill: steelblue;
+    }
+
+    .d3-visualize rect:hover {
+        fill: red;
+    }
+
+    .d3-visualize text {
+       
+        font: 20px sans-serif;
+        text-anchor: end;
+    }
+    .d3-visualize {
+        position: relative;
+        left: 30px;
+        bottom: 0px;
+        height: 300px;
+        width:500px
+    }
+
+</style>
+    <div class="container">
+        <h2>stack overflow activity</h2>
+       
+        <form role="form">
+            <img src="stackoverflow.png" class="img-rounded" alt="Cinque Terre" width="304" height="236">
+            <div class="form-group">
+                <label for="usr">nick name:</label>
+                <input type="text" class="form-control" id="nNameID">
+                <button type="button" class="btn btn-default" id="findid">find</button>
+                <div id="failureMessageNotification" class="alert alert-danger collapse" role="alert"></div>
+            </div>
+           
+        </form>
+		<h1>Reputation Chart</h1>
+        <svg class="d3-visualize"></svg>
+    </div>
+    <script>
+    $(document).ready(function () {
+        var ActivityManager = (new findActivityManager()).init();
+    });
+    </script>
+
+</body>
+</html>
