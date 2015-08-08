@@ -5,15 +5,30 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="JSGeneralElectric.js"></script>
     <title>
 
         
     </title>
     <style>
-        
-    
+        .chart {
+            background: #b0e0f8;
+            margin: 5px;
+        }
 
+            .chart rect {
+                stroke: white;
+                fill: steelblue;
+            }
+
+            .chart text {
+                fill: white;
+            }
+
+                .chart text.name {
+                    fill: #000;
+                }
     </style>
 
 </head>
@@ -56,7 +71,8 @@
            
         </form>
 		<h1>Reputation Chart</h1>
-        <svg class="d3-visualize"></svg>
+        <div id="container"></div>
+       
     </div>
     <script>
     $(document).ready(function () {

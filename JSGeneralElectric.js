@@ -23,8 +23,11 @@
             success: function (data)
             {
                 console.log(data);
-                $("svg").empty();
-                // create data structure for d3 - using response & reputation for the first user
+                
+                $("#container").html("");
+
+                var names = [
+					"change_day", "change_month", "change_quarter", "change_week", "change_year"];
                 var chartdata = [ 
                     data.items[0].reputation_change_day,
                     data.items[0].reputation_change_month,
@@ -32,31 +35,62 @@
                     data.items[0].reputation_change_week,
                     data.items[0].reputation_change_year
                 ];
-				var chartNames = [
-					"reputation_change_day", "reputation_change_month", "reputation_change_quarter", "reputation_change_week", "reputation_change_year"];
+               
+                var chart,
+                 width = 1000,
+                 bar_height = 20,
+                 height = bar_height * names.length;
 
-                var width = 720,
-					height = 200,
-                    barHeight = 20,
-					barWidth = 20,
-					barOffset = 20;
+                
 
-				d3.select('.d3-visualize').append('svg')
-				  .attr('width', width)
-				  .attr('height', height)
-				  .style('background', '#dff0d8')
-				  .selectAll('rect').data(chartdata)
-				  .enter().append('rect')
-					.attr('width', barWidth)
-					.attr('height', function (data) {
-						return data;
-					})
-					.attr('x', function (data, i) {
-						return i * (barWidth + barOffset);
-					})
-					.attr('y', function (data) {						
-						return height - data;
-					});
+                var x, y;
+                x = d3.scale.linear()
+                   .domain([0, d3.max(chartdata)])
+                   .range([0, width]);
+
+                y = d3.scale.ordinal()
+                   .domain(chartdata)
+                   .rangeBands([0, height]);
+
+         
+
+                var left_width = 100;
+
+                chart = d3.select($("#container")[0])
+                  .append('svg')
+                  .attr('class', 'chart')
+                  .attr('width', left_width + width)
+                  .attr('height', height);
+
+                chart.selectAll("rect")
+                  .data(chartdata)
+                  .enter().append("rect")
+                  .attr("x", left_width)
+                  .attr("y", y)
+                  .attr("width", x)
+                  .attr("height", y.rangeBand());
+
+                chart.selectAll("text.score")
+                  .data(chartdata)
+                  .enter().append("text")
+                  .attr("x", function (d) { return x(d) + left_width; })
+                  .attr("y", function (d) { return y(d) + y.rangeBand() / 2; })
+                  .attr("dx", -5)
+                  .attr("dy", ".36em")
+                  .attr("text-anchor", "end")
+                  .attr('class', 'score')
+                  .text(String);
+
+                chart.selectAll("text.name")
+                  .data(names)
+                  .enter().append("text")
+                  .attr("x", left_width / 2)
+                  .attr("y", function (d) { return y(d) + y.rangeBand() / 2; })
+                  .attr("dy", ".36em")
+                  .attr("text-anchor", "middle")
+                  .attr('class', 'name')
+                  .text(String);
+               
 					
             },
             error: function (message) {
